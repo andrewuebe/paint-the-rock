@@ -1,0 +1,25 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #f0f0f0;
+}
+
+.stage-parent {
+    width: 100%;
+    max-width: 1080px;
+    height: auto;
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.konvajs-content {
+  cursor: pointer;
+}
