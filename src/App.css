@@ -9,7 +9,8 @@ body {
     width: 100%;
     max-width: 1080px;
     height: auto;
-    margin: 120px auto;
+    margin: 0 auto;
+    margin-top: 120px;
     cursor: pointer;
 }
 
@@ -115,6 +116,29 @@ body {
   transition: background 1s ease;
 }
 
+.overlay.modal {
+  background: rgba(0,0,0,0.4);
+  transition: background 1s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.save-modal {
+  width: 80vw;
+  padding: 2rem;
+  background-color: white;
+  font-size: 16px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.modal-header {
+  font-size: 24px;
+  font-family: "Campton Bold";
+  color: #4e2a84;
+}
+
 .size-picker > div{
   padding-right: 2rem;
 }
@@ -129,4 +153,131 @@ body {
 .size-option.active {
   opacity: 1;
   outline: none;
+}
+
+.last-save {
+  font-size: 16px;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.last-save-name {
+  font-size: 24px;
+  font-family: "Campton Bold";
+  color: #4e2a84;
+}
+
+.report-painting {
+  padding: 6px 12px;
+  color: white;
+  background-color: #EF553F;
+  font-size: 12px;
+  border-radius: 20px;
+  margin-top: 8px;
+  margin: 0 auto;
+}
+
+.report-painting:focus, .report-painting:active, .report-painting:hover {
+  outline: none;
+  background-color: #D85820;
+}
+
+.save-menu {
+  display: block;
+  position: relative;
+  width: 80%;
+  margin: 0 auto;
+  border-top: 1px solid #4e2a84;
+  padding-top: 2rem;
+  margin-top: 2rem;
+}
+
+.artist-name {
+  width: 100%;
+  display: block;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 16px;
+  font-size: 16px;
+}
+
+.artist-name.error {
+  border: 1px solid red;
+  color: red;
+}
+
+.artist-name.error::placeholder {
+  color: red;
+}
+
+.save-btn {
+  font: 16px "Akkurat Pro Bold", "Arial Black", sans-serif;
+    color: #fff;
+    background: #4e2a84;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 400;
+    padding: .8em 1em .7em;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    display: block;
+    vertical-align: middle;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    box-shadow: 0 0 1px transparent;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -moz-osx-font-smoothing: grayscale;
+    position: relative;
+    -webkit-transition-property: color;
+    transition-property: color;
+    -webkit-transition-duration: .2s;
+    transition-duration: .2s;
+    min-width: 165px;
+    width: 100%;
+    max-width: 300px;
+    margin: 1rem auto;
+}
+
+.save-btn:active, .save-btn:focus, .save-btn:hover {
+  outline: none;
+}
+
+.save-btn:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #b6acd1;
+    -webkit-transform: scaleX(0);
+    transform: scaleX(0);
+    -webkit-transform-origin: 0 50%;
+    transform-origin: 0 50%;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+    -webkit-transition-duration: .2s;
+    transition-duration: .2s;
+    -webkit-transition-timing-function: ease-out;
+    transition-timing-function: ease-out
+}
+
+.save-btn:hover:before, .save-btn:active:before, .save-btn:focus:before {
+  -webkit-transform: scaleX(1);
+    transform: scaleX(1)
+}
+
+.error-msg {
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  font-size: 12px;
+  color: red;
+  padding: 0 1rem;
+  margin-bottom: 8px;
 }
