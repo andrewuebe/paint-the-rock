@@ -12,9 +12,25 @@ import SaveRock from "./components/SaveRock";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUndo } from "@fortawesome/free-solid-svg-icons";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import nuPurple from "@material-ui/core/colors/nuPurple";
 import axios from "axios";
 import SaveModal from "./components/SaveModal";
+
+var nuPurple = {
+  50: '#f3e5f5',
+  100: '#e1bee7',
+  200: '#ce93d8',
+  300: '#ba68c8',
+  400: '#ab47bc',
+  500: '#4e2a84',
+  600: '#8e24aa',
+  700: '#7b1fa2',
+  800: '#6a1b9a',
+  900: '#4a148c',
+  A100: '#ea80fc',
+  A200: '#e040fb',
+  A400: '#d500f9',
+  A700: '#aa00ff'
+};
 
 const theme = createMuiTheme({
   palette: {
