@@ -61,6 +61,12 @@ body {
   cursor: pointer;
 }
 
+.undo-button.no-history svg,
+.undo-button.no-history svg:hover {
+  opacity: 0.5;
+  cursor: auto;
+}
+
 .current-color {
   display: block;
   margin-bottom: 2rem;

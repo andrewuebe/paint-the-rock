@@ -211,7 +211,7 @@ class App extends Component {
       const layer = this.layerEl.current;
       var children = layer.getChildren();
       console.log(children);
-      children[this.state.historyCount - 1].remove();
+      children[this.state.historyCount].remove();
       this.setState({ historyCount: this.state.historyCount - 1 });
       this.layerEl.current.batchDraw();
     }
@@ -380,7 +380,7 @@ class App extends Component {
       <MuiThemeProvider theme={theme}>
         <div className="app-container">
           <div className="control-bar">
-            <div className="undo-button">
+            <div className={`undo-button${this.state.historyCount === 0 ? " no-history" : ""}`}>
               <FontAwesomeIcon
                 icon={faUndo}
                 size="4x"
