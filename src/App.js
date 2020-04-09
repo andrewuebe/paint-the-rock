@@ -15,6 +15,16 @@ import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import axios from "axios";
 import SaveModal from "./components/SaveModal";
 
+const CurrentStage = process.env.REACT_APP_STAGE;
+var serverURL = "";
+if(CurrentStage === "dev" || CurrentStage === "test"){
+  serverURL = "//localhost:5000";
+} else if(CurrentStage === "prod"){
+  serverURL = "/api"
+}
+
+console.log(serverURL);
+
 var nuPurple = {
   50: '#f3e5f5',
   100: '#e1bee7',
@@ -98,10 +108,12 @@ class App extends Component {
   }
 
   componentDidMount() {
-    axios.get(`http://localhost:5000/rocks/last`).then((res) => {
+
+    axios.get(`${serverURL}/rocks/last`).then((res) => {
       const prevPaintingData = res.data;
       this.setState({ prevPaintingSave: prevPaintingData });
     });
+
     this.setState({ containerWidth: this.stageParent.current.offsetWidth });
     this.initialStageResize();
     window.addEventListener("resize", this.updateDimensions.bind(this));
@@ -266,7 +278,7 @@ class App extends Component {
 
   uploadImgToServer = (imgData) => {
     axios
-      .post("http://localhost:5000/rocks/add", {
+      .post(`${serverURL}/rocks/add`, {
         lastModifiedDate: imgData.lastModifiedDate,
         painterName: imgData.painterName,
         canvasImgData: imgData.canvasImgData,
@@ -287,7 +299,7 @@ class App extends Component {
   reportPrevPainting = () => {
     const prevPaintingId = this.state.prevPaintingSave._id
     axios
-      .post("http://localhost:5000/rocks/report/" + prevPaintingId)
+      .post(`${serverURL}/rocks/report/` + prevPaintingId)
       .then((response) => {
         console.log(response);
         if (!response.data.errmsg) {
