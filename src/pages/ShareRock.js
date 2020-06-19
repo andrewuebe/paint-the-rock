@@ -4,7 +4,7 @@ import Konva from "konva";
 import { Stage, Layer } from "react-konva";
 import RockSvg from "../components/RockSvg";
 import PrevRock from "../components/PrevRock";
-import DocumentMeta from "react-document-meta";
+import { Helmet } from "react-helmet";
 
 const CurrentStage = process.env.REACT_APP_STAGE;
 var serverURL = "";
@@ -24,7 +24,7 @@ class ShareRock extends Component {
     this.state = {
       rockData: {},
       containerWidth: 0,
-      rockImgUrl: ""
+      rockImgUrl: "",
     };
   }
 
@@ -42,7 +42,7 @@ class ShareRock extends Component {
     var canvas = document.getElementsByTagName("canvas");
     console.log(canvas);
     var dataURL = canvas[0].toDataURL("image/png");
-    this.setState({rockImgUrl: dataURL})
+    this.setState({ rockImgUrl: dataURL });
   }
 
   componentWillUnmount() {
@@ -80,27 +80,18 @@ class ShareRock extends Component {
   }
 
   render() {
-    const meta = {
-      title: "Test Meta Title",
-      meta: {
-        property: "twitter:title",
-        content: "Paint The Rock From Home!",
-      },
-      meta: {
-        property: "twitter:description",
-        content: "Here's what First Name Last Name drew.",
-      },
-      meta: {
-        property: "twitter:image",
-        content: this.state.rockImgUrl,
-      },
-      meta: {
-        property: "twitter:card",
-        content: "summary_large_image",
-      },
-    };
     return (
-      <DocumentMeta {...meta}>
+      <div>
+        <Helmet>
+          <title>{`Rock painting by ${this.state.rockData.painterName}`}</title>
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content={`Digital rock painting!`} />
+          <meta
+            name="twitter:description"
+            content={`Here's what ${this.state.rockData.painterName} painted.`}
+          />
+          <meta name="twitter:image" content={this.state.rockImgUrl} />
+        </Helmet>
         <h2>This worked!</h2>
         <div className="stage-parent" ref={this.stageParent}>
           <Stage ref={this.stageEl}>
@@ -113,7 +104,7 @@ class ShareRock extends Component {
             </Layer>
           </Stage>
         </div>
-      </DocumentMeta>
+      </div>
     );
   }
 }
