@@ -287,3 +287,47 @@ body {
   padding: 0 1rem;
   margin-bottom: 8px;
 }
+
+.past-paintings-btn {
+  display: block;
+  margin-top: 1rem;
+}
+
+.painting-history-list {
+  display: block;
+  width: 100%;
+  position: relative;
+}
+
+.painting-history-list.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.past-painting {
+  display: block;
+  width: calc( 33% - 1rem );
+}
+
+.past-painting__rock {
+  display: block;
+  position: relative;
+  width: 100%;
+  padding-top: 100%;
+}
+
+.past-painting__rock img {
+  position: absolute;
+  display: block;
+  width: 100%;
+  max-width: 1080px;
+  height: auto;
+  top: 0;
+  box-sizing: border-box;
+}
+
+img.rock-overlay {
+  box-sizing: content-box;
+  width: 101%;
+}
