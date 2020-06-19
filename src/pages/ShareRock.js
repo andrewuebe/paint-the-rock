@@ -85,12 +85,10 @@ class ShareRock extends Component {
         <Helmet>
           <title>{`Rock painting by ${this.state.rockData.painterName}`}</title>
           <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:title" content={`Digital rock painting!`} />
-          <meta
-            name="twitter:description"
-            content={`Here's what ${this.state.rockData.painterName} painted.`}
-          />
-          <meta name="twitter:image" content="http://www.fillmurray.com/460/300" />
+          <meta name="twitter:site" content="Paint The Rock" />
+          <meta name="twitter:title" content="Paint a digital version of The Rock" />
+          <meta name="twitter:description" content={`Rock painting by ${this.state.rockData.painterName}`} />
+          <meta name="twitter:image" content="https://i.imgur.com/WKHsQHT.png" />
         </Helmet>
         <h2>This worked!</h2>
         <div className="stage-parent" ref={this.stageParent}>
