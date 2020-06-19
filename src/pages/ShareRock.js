@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { render } from 'react-snapshot';
 import axios from "axios";
 import Konva from "konva";
 import { Stage, Layer } from "react-konva";
