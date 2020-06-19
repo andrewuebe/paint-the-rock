@@ -90,7 +90,7 @@ class ShareRock extends Component {
             name="twitter:description"
             content={`Here's what ${this.state.rockData.painterName} painted.`}
           />
-          <meta name="twitter:image" content={this.state.rockImgUrl} />
+          <meta name="twitter:image" content="http://www.fillmurray.com/460/300" />
         </Helmet>
         <h2>This worked!</h2>
         <div className="stage-parent" ref={this.stageParent}>
