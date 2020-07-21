@@ -81,7 +81,7 @@ class ShareRock extends Component {
 
   render() {
     return (
-      <div>
+      <div className="painting-history">
         <Helmet>
           <title>I just painted The Digital Rock (Northwestern University)</title>
           <meta name="twitter:card" content="summary_large_image" />
@@ -90,18 +90,17 @@ class ShareRock extends Component {
           <meta name="twitter:description" content={`Rock painting by ${this.state.rockData.painterName}`} />
           <meta name="twitter:image" content="https://i.imgur.com/WKHsQHT.png" />
         </Helmet>
-        <h2>This worked!</h2>
         <div className="stage-parent" ref={this.stageParent}>
-          <Stage ref={this.stageEl}>
-            <Layer>
-              <PrevRock
-                containerWidth={this.state.containerWidth}
-                imgData={this.state.rockData.canvasImgData}
-              />
-              <RockSvg containerWidth={this.state.containerWidth} />
-            </Layer>
-          </Stage>
-        </div>
+        <Stage ref={this.stageEl} width={1080} height={1080}>
+          <Layer>
+            <PrevRock
+              containerWidth={this.state.containerWidth}
+              imgData={this.state.rockData.canvasImgData}
+            />
+            <RockSvg containerWidth={this.state.containerWidth} />
+          </Layer>
+        </Stage>
+      </div>
       </div>
     );
   }

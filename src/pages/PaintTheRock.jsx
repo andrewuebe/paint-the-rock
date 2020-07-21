@@ -24,11 +24,6 @@ if (CurrentStage === "dev" || CurrentStage === "test") {
   serverURL = "/api";
 }
 
-// Rock SVG
-var img = new Image();
-img.origin = 'anonymous';
-img.src = "https://assets.ard.northwestern.edu/files/2020/paint-the-rock/therock.svg";
-
 // Colors for MUI
 var nuPurple = {
   50: "#f3e5f5",
@@ -300,6 +295,8 @@ class PaintTheRock extends Component {
         painterName: imgData.painterName,
         canvasImgData: imgData.canvasImgData,
         numOfReports: 0,
+        paintedOverName: this.state.prevPaintingSave.painterName,
+        paintedOverId: this.state.prevPaintingSave._id
       })
       .then((response) => {
         console.log(response);
@@ -323,6 +320,7 @@ class PaintTheRock extends Component {
         console.log(e);
       });
   };
+
 
   reportPrevPainting = () => {
     const prevPaintingId = this.state.prevPaintingSave._id;
@@ -427,7 +425,7 @@ class PaintTheRock extends Component {
             />
           </Layer>
           <Layer>
-            <RockSvg img={img} containerWidth={this.state.containerWidth} />
+            <RockSvg containerWidth={this.state.containerWidth} />
           </Layer>
         </Stage>
       </div>
@@ -441,7 +439,7 @@ class PaintTheRock extends Component {
               containerWidth={this.state.containerWidth}
               imgData={this.state.prevPaintingSave.canvasImgData}
             />
-            <RockSvg img={img} containerWidth={this.state.containerWidth} />
+            <RockSvg containerWidth={this.state.containerWidth} />
           </Layer>
         </Stage>
       </div>
@@ -450,7 +448,7 @@ class PaintTheRock extends Component {
     return (
       <MuiThemeProvider theme={theme}>
         <div className="app-container">
-          <div className="control-bar">
+          <div className={!this.state.paintingSaved ? `control-bar` : `control-bar hide-element`}>
             <div
               className={`undo-button${
                 this.state.historyCount === 0 ? " no-history" : ""
@@ -483,7 +481,7 @@ class PaintTheRock extends Component {
             : rockNonPaintableCanvas}
           <div className="save-rock">
             <div className="last-save">
-              The rock was last painted by
+              {this.state.paintingSaved ? `You just saved your painting under the name:` : `The rock was last painted by`}
               <div className="last-save-name">
                 {this.state.prevPaintingSave.painterName}
               </div>

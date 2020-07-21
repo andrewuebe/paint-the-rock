@@ -293,6 +293,10 @@ body {
   margin-top: 1rem;
 }
 
+.painting-history {
+  padding: 1rem;
+}
+
 .painting-history-list {
   display: block;
   width: 100%;
@@ -305,9 +309,69 @@ body {
   justify-content: space-between;
 }
 
+h2.page-title {
+  margin-bottom: 3rem;
+}
+
 .past-painting {
   display: block;
-  width: calc( 33% - 1rem );
+  width: calc( 33% - 2rem );
+  position: relative;
+  padding: 1.5rem;
+  border: 1px solid rgba(0,0,0,0.2);
+  margin-bottom: 2rem;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.1)
+}
+
+div.past-painting:first-of-type::before {
+  display: block;
+  position: absolute;
+  background: #5091CD;
+  content: 'Last saved painting';
+  text-transform: uppercase;
+  z-index: 999;
+  padding: 8px 12px;
+  font-size: 11px;
+  color: white;
+  font-family: "Akkurat Pro Bold";
+  border-left: 1px solid rgba(0,0,0,0.2);
+  border-bottom        : 1px solid rgba(0,0,0,0.2);
+  right: 0px;
+  top: 0px;
+}
+
+.past-painting__info-section {
+  position: relative;
+  z-index: 999;
+  margin-bottom: 1rem;
+  display: inline-block;
+  font-size: 1.2rem;
+  font-family: "Campton Bold";
+  color: #4e2a84;
+}
+
+.past-painting__section-title {
+  font-family: "Akkurat Pro Light";
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+  font-size: 1rem;
+  color: #342f2e;
+}
+
+.past-painting__side-by-side {
+  display: flex;
+  justify-content: space-between;
+}
+
+.past-painting__side-by-side .past-painting__info-section {
+  width: calc( 50% - 1rem);
+  padding-right: 6px;
+  font-size: 1rem;
+}
+
+.past-painting__side-by-side .past-painting__section-title {
+  font-size: 0.8rem;
+  margin-bottom: 5px;
 }
 
 .past-painting__rock {
@@ -379,4 +443,8 @@ img.rock-overlay {
 .social-links a:hover {
   color: #4e2a84;
   cursor: pointer;
+}
+
+.hide-element {
+  display: none;
 }

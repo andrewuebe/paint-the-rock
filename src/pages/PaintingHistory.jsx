@@ -22,7 +22,7 @@ class PaintingHistory extends Component {
 
   componentDidMount() {
     console.log("painting history component mount");
-    axios.get(`${serverURL}/rocks`).then((res) => {
+    axios.get(`${serverURL}/rocks/last-eighteen`).then((res) => {
       const prevPaintingData = res.data;
       this.setState({ allRockData: prevPaintingData });
     });
@@ -35,7 +35,6 @@ class PaintingHistory extends Component {
   render() {
     const mapRockHistory = this.state.allRockData
       .slice(0)
-      .reverse()
       .map((rock) => {
         return (
           <div className="past-painting" key={rock.id}>
@@ -44,13 +43,36 @@ class PaintingHistory extends Component {
                 src={rock.canvasImgData}
                 alt={`Digital rock painting made by ${rock.painterName} on ${rock.lastModifiedDate}`}
               ></img>
-              <img className="rock-overlay" src="https://assets.ard.northwestern.edu/files/2020/paint-the-rock/therock.svg"></img>
+              <img
+                className="rock-overlay"
+                src="https://assets.ard.northwestern.edu/files/2020/paint-the-rock/therock.svg"
+              ></img>
             </div>
-            <div className="past-painting__painter-name">
+            <div className="past-painting__info-section past-painting__painter-name">
+              <div className="past-painting__section-title">Painted by:</div>
               {rock.painterName}
             </div>
+            <div className="past-painting__side-by-side">
+              <div className="past-painting__info-section past-painting__painter-name">
+                <div className="past-painting__section-title">Painted over:</div>
+                <Link
+                to={`/share-rock/${rock.paintedOverId}`}
+              >
+                {`${rock.paintedOverName}’s painting`}
+              </Link>
+              </div>
+              <div className="past-painting__info-section past-painting__painter-name">
+                <div className="past-painting__section-title">Time painted:</div>
+                {rock.painterName}
+              </div>
+            </div>
             <div className="past-painting__share">
-            <Link className="past-paintings-btn" to={`/share-rock/${rock._id}`}>Share this painting</Link>
+              <Link
+                className="past-paintings-btn"
+                to={`/share-rock/${rock._id}`}
+              >
+                Share this painting
+              </Link>
             </div>
           </div>
         );
@@ -58,7 +80,7 @@ class PaintingHistory extends Component {
 
     return (
       <div className="painting-history">
-        <h3>All past rocks</h3>
+        <h2 className="page-title">Painting History</h2>
         <div
           className={`painting-history-list${
             this.state.displayMode === "grid" ? " grid" : ""
