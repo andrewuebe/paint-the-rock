@@ -24,6 +24,11 @@ if (CurrentStage === "dev" || CurrentStage === "test") {
   serverURL = "/api";
 }
 
+// Rock SVG
+var img = new Image();
+img.origin = 'anonymous';
+img.src = "https://assets.ard.northwestern.edu/files/2020/paint-the-rock/therock.svg";
+
 // Colors for MUI
 var nuPurple = {
   50: "#f3e5f5",
@@ -54,8 +59,8 @@ const theme = createMuiTheme({
 
 // App component
 class PaintTheRock extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.stageEl = React.createRef();
     this.layerEl = React.createRef();
     this.stageParent = React.createRef();
@@ -88,6 +93,8 @@ class PaintTheRock extends Component {
       curBrushSize: 35,
       colorButtonClicked: false,
       sizeButtonClicked: false,
+      paintingSaved: false,
+      imgShareData: "",
       colorOptions: [
         "#401F68",
         "#4e2a84",
@@ -122,9 +129,11 @@ class PaintTheRock extends Component {
     this.updateSaveDate();
   }
 
+  componentDidUpdate() {}
+
   componentWillUnmount() {
-      console.log("tahaha 2")
-      window.removeEventListener("resize", this.updateDimensions, false)
+    console.log("tahaha 2");
+    window.removeEventListener("resize", this.updateDimensions, false);
   }
 
   updateSaveDate() {
@@ -297,6 +306,17 @@ class PaintTheRock extends Component {
         if (!response.data.errmsg) {
           console.log(`rock succesfully added!`);
           this.setState({ isSaveModalOpen: false });
+          axios.get(`${serverURL}/rocks/last`).then((res) => {
+            const prevPaintingData = res.data;
+            this.setState({ prevPaintingSave: prevPaintingData });
+          });
+          this.setState({ historyCount: 0 });
+          this.setState({ paintingSaved: true }, () => {
+            var finalCanvas = document.getElementsByTagName("canvas");
+            var finalCanvas = finalCanvas[0];
+            var finalDataURL = finalCanvas.toDataURL("image/png");
+            this.setState({ imgShareData: finalDataURL });
+          });
         }
       })
       .catch((e) => {
@@ -387,103 +407,127 @@ class PaintTheRock extends Component {
       </div>
     );
 
+    const rockPaintableCanvas = (
+      <div className="stage-parent" ref={this.stageParent}>
+        <Stage
+          width={1080}
+          height={1080}
+          ref={this.stageEl}
+          onMouseDown={this.onMouseDown}
+          onMouseMove={this.onMouseMove}
+          onMouseUp={this.onMouseUp}
+          onTouchStart={this.onMouseDown}
+          onTouchMove={this.onMouseMove}
+          onTouchEnd={this.onMouseUp}
+        >
+          <Layer ref={this.layerEl}>
+            <PrevRock
+              containerWidth={this.state.containerWidth}
+              imgData={this.state.prevPaintingSave.canvasImgData}
+            />
+          </Layer>
+          <Layer>
+            <RockSvg img={img} containerWidth={this.state.containerWidth} />
+          </Layer>
+        </Stage>
+      </div>
+    );
+
+    const rockNonPaintableCanvas = (
+      <div className="stage-parent" ref={this.stageParent}>
+        <Stage ref={this.stageEl} width={1080} height={1080}>
+          <Layer>
+            <PrevRock
+              containerWidth={this.state.containerWidth}
+              imgData={this.state.prevPaintingSave.canvasImgData}
+            />
+            <RockSvg img={img} containerWidth={this.state.containerWidth} />
+          </Layer>
+        </Stage>
+      </div>
+    );
+
     return (
-        <MuiThemeProvider theme={theme}>
-          <div className="app-container">
-            <div className="control-bar">
-              <div
-                className={`undo-button${
-                  this.state.historyCount === 0 ? " no-history" : ""
-                }`}
-              >
-                <FontAwesomeIcon
-                  icon={faUndo}
-                  size="4x"
-                  onClick={this.handleUndo}
-                />
-                <div className="undo-text">Undo</div>
-              </div>
-              <div className="settings">
-                {this.state.sizeButtonClicked && ControlsOverlay}
-                {this.state.colorButtonClicked && ControlsOverlay}
-              </div>
-              <div className="color-size-buttons">
-                <CurrentColor
-                  handleColorClick={this.handleColorClick}
-                  curColor={this.state.curBrushColor}
-                />
-                <CurrentSize
-                  handleSizeClick={this.handleSizeClick}
-                  brushSize={this.state.curBrushSize}
-                />
-              </div>
-            </div>
-            <div className="stage-parent" ref={this.stageParent}>
-              <Stage
-                width={1080}
-                height={1080}
-                ref={this.stageEl}
-                onMouseDown={this.onMouseDown}
-                onMouseMove={this.onMouseMove}
-                onMouseUp={this.onMouseUp}
-                onTouchStart={this.onMouseDown}
-                onTouchMove={this.onMouseMove}
-                onTouchEnd={this.onMouseUp}
-              >
-                <Layer ref={this.layerEl}>
-                  <PrevRock
-                    containerWidth={this.state.containerWidth}
-                    imgData={this.state.prevPaintingSave.canvasImgData}
-                  />
-                </Layer>
-                <Layer>
-                  <RockSvg containerWidth={this.state.containerWidth} />
-                </Layer>
-              </Stage>
-            </div>
-            <div className="save-rock">
-              <div className="last-save">
-                The rock was last painted by
-                <div className="last-save-name">
-                  {this.state.prevPaintingSave.painterName}
-                </div>
-                <div className="save-date-time">
-                  {this.state.prevPaintingSave.lastModifiedDate}
-                </div>
-                {!this.state.isPaintingReported && (
-                  <button
-                    className="report-painting"
-                    onClick={this.reportPrevPainting}
-                  >
-                    Report this painting
-                  </button>
-                )}
-                {this.state.isPaintingReported && (
-                  <p>
-                    Thank you for submitting a report. We will investigate, and
-                    take necessary action.
-                  </p>
-                )}
-                <Link className="past-paintings-btn" to="/painting-history">See all past paintings</Link>
-              </div>
-              <SaveRock
-                saveError={this.state.saveError}
-                changeName={this.changeName}
-                handleOpenModal={this.handleOpenModal}
-              />
-            </div>
+      <MuiThemeProvider theme={theme}>
+        <div className="app-container">
+          <div className="control-bar">
             <div
-              onClick={this.handleOverlayClick}
-              className={`overlay${
-                this.state.colorButtonClicked ? " active" : ""
-              }${this.state.sizeButtonClicked ? " active" : ""}${
-                this.state.isSaveModalOpen ? " modal" : ""
+              className={`undo-button${
+                this.state.historyCount === 0 ? " no-history" : ""
               }`}
             >
-              {this.state.isSaveModalOpen && SaveModalAppear}
+              <FontAwesomeIcon
+                icon={faUndo}
+                size="4x"
+                onClick={this.handleUndo}
+              />
+              <div className="undo-text">Undo</div>
+            </div>
+            <div className="settings">
+              {this.state.sizeButtonClicked && ControlsOverlay}
+              {this.state.colorButtonClicked && ControlsOverlay}
+            </div>
+            <div className="color-size-buttons">
+              <CurrentColor
+                handleColorClick={this.handleColorClick}
+                curColor={this.state.curBrushColor}
+              />
+              <CurrentSize
+                handleSizeClick={this.handleSizeClick}
+                brushSize={this.state.curBrushSize}
+              />
             </div>
           </div>
-        </MuiThemeProvider>
+          {!this.state.paintingSaved
+            ? rockPaintableCanvas
+            : rockNonPaintableCanvas}
+          <div className="save-rock">
+            <div className="last-save">
+              The rock was last painted by
+              <div className="last-save-name">
+                {this.state.prevPaintingSave.painterName}
+              </div>
+              <div className="save-date-time">
+                {this.state.prevPaintingSave.lastModifiedDate}
+              </div>
+              {!this.state.isPaintingReported && (
+                <button
+                  className="report-painting"
+                  onClick={this.reportPrevPainting}
+                >
+                  Report this painting
+                </button>
+              )}
+              {this.state.isPaintingReported && (
+                <p>
+                  Thank you for submitting a report. We will investigate, and
+                  take necessary action.
+                </p>
+              )}
+              <Link className="past-paintings-btn" to="/painting-history">
+                See all past paintings
+              </Link>
+            </div>
+            <SaveRock
+              saveError={this.state.saveError}
+              changeName={this.changeName}
+              handleOpenModal={this.handleOpenModal}
+              paintingSaved={this.state.paintingSaved}
+              prevPaintingId={this.state.prevPaintingSave._id}
+            />
+          </div>
+          <div
+            onClick={this.handleOverlayClick}
+            className={`overlay${
+              this.state.colorButtonClicked ? " active" : ""
+            }${this.state.sizeButtonClicked ? " active" : ""}${
+              this.state.isSaveModalOpen ? " modal" : ""
+            }`}
+          >
+            {this.state.isSaveModalOpen && SaveModalAppear}
+          </div>
+        </div>
+      </MuiThemeProvider>
     );
   }
 }

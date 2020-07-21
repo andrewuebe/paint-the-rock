@@ -83,10 +83,10 @@ class ShareRock extends Component {
     return (
       <div>
         <Helmet>
-          <title>{`Rock painting by ${this.state.rockData.painterName}`}</title>
+          <title>I just painted The Digital Rock (Northwestern University)</title>
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:site" content="Paint The Rock" />
-          <meta name="twitter:title" content="Paint a digital version of The Rock" />
+          <meta name="twitter:title" content="Paint a digital version of The Rock at Northwestern University" />
           <meta name="twitter:description" content={`Rock painting by ${this.state.rockData.painterName}`} />
           <meta name="twitter:image" content="https://i.imgur.com/WKHsQHT.png" />
         </Helmet>

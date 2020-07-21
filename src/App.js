@@ -7,11 +7,12 @@ import "./App.css";
 
 // App component
 class App extends Component {
+  
   render() {
     return (
       <Router>
         <Switch>
-          <Route path="/painting-history" component={PaintingHistory} />
+          <Route path="/painting-history" component={PaintingHistory}/>
           <Route path="/share-rock/:id" component={ShareRock} />
           <Route path="/" component={PaintTheRock} />
         </Switch>
