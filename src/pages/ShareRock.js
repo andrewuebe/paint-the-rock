@@ -5,6 +5,7 @@ import { Stage, Layer } from "react-konva";
 import RockSvg from "../components/RockSvg";
 import PrevRock from "../components/PrevRock";
 import { Helmet } from "react-helmet";
+import SaveRock from "../components/SaveRock";
 
 const CurrentStage = process.env.REACT_APP_STAGE;
 var serverURL = "";
@@ -80,6 +81,10 @@ class ShareRock extends Component {
   }
 
   render() {
+    const saveError = {
+      isError: false,
+      errorMsg: ""
+    }
     return (
       <div className="painting-history">
         <Helmet>
@@ -88,7 +93,7 @@ class ShareRock extends Component {
           <meta name="twitter:site" content="Paint The Rock" />
           <meta name="twitter:title" content="Paint a digital version of The Rock at Northwestern University" />
           <meta name="twitter:description" content={`Rock painting by ${this.state.rockData.painterName}`} />
-          <meta name="twitter:image" content="https://i.imgur.com/WKHsQHT.png" />
+          <meta name="twitter:image" content="/logo512.png" />
         </Helmet>
         <div className="stage-parent" ref={this.stageParent}>
         <Stage ref={this.stageEl} width={1080} height={1080}>
@@ -101,6 +106,7 @@ class ShareRock extends Component {
           </Layer>
         </Stage>
       </div>
+      <SaveRock prevPaintingId={this.state.rockData._id} saveError={saveError} paintingSaved={true}></SaveRock>
       </div>
     );
   }

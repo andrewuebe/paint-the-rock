@@ -448,3 +448,20 @@ img.rock-overlay {
 .hide-element {
   display: none;
 }
+
+.return-to-painting {
+  font-size: 1rem;
+  margin-bottom: 3rem;
+}
+
+@media screen and (max-width: 850px) {
+  .past-painting {
+    width: calc(50% - 2rem);
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .past-painting {
+    width: 100%;
+  }
+}

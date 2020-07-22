@@ -81,6 +81,7 @@ class PaintingHistory extends Component {
     return (
       <div className="painting-history">
         <h2 className="page-title">Painting History</h2>
+        <p className="return-to-painting" ><Link to={`/`}>Return to painting page</Link></p>
         <div
           className={`painting-history-list${
             this.state.displayMode === "grid" ? " grid" : ""

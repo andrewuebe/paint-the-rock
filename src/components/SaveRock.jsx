@@ -48,7 +48,7 @@ class SaveRock extends Component {
         <div className="social-links">
           <a
             target="_blank"
-            href={`https://twitter.com/intent/tweet?url=https%3A%2F%2Fpainttherock.net%2Fshare-rock%2F${this.props.prevPaintingId}&text=I%20painted%20the%20the%20Digital%20Purple%20Rock%21&hashtags=PurplePride%20NAA`}
+            href={`https://twitter.com/intent/tweet?url=https%3A%2F%2Fpainttherock.net%2Fshare-rock%2F${this.props.prevPaintingId}&text=I%20painted%20the%20the%20Digital%20Purple%20Rock%21&hashtags=PurplePride%20%23NAA`}
             className="social-links__twitter"
           >
             <FontAwesomeIcon icon={faTwitter} size="4x" />
